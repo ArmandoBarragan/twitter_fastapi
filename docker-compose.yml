@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  app:
+    build:
+      dockerfile: compose/Dockerfile
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/twitter_db
+      - DEBUG=TRUE
+    depends_on:
+      - db
+    restart: always
+    expose:
+      - 8000
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=twitter_db
+      - POSTGRES_HOST=postgres
